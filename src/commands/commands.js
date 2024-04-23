@@ -173,7 +173,7 @@ function _tagExternal(hasExternal) {
   console.log("_tagExternal method"); //debugging
 
   // External subject tag.
-  const externalTag = "[External recipients]";
+  const externalTag = "[Отправка сообщения на сторонние адреса]";
 
   if (hasExternal) {
     console.log("External: Get Subject"); //debugging
@@ -210,25 +210,6 @@ function _tagExternal(hasExternal) {
           });
         }
     });
-
-    // Set disclaimer as there are external recipients.
-    const disclaimer = '<p style="color:blue"><i>Caution: This email includes external recipients.</i></p>';
-    console.log("Set disclaimer"); //debugging
-    Office.context.mailbox.item.body.appendOnSendAsync(
-      disclaimer,
-      {
-        "coercionType": Office.CoercionType.Html
-      },
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to set disclaimer via appendOnSend. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Set disclaimer succeeded"); //debugging
-      }
-    );
   } else {
     console.log("Internal: Get subject"); //debugging
     // Ensure "[External]" is not part of the subject.
@@ -260,21 +241,6 @@ function _tagExternal(hasExternal) {
             });
         }
     });
-
-    // Clear disclaimer as there aren't any external recipients.
-    console.log("Clear disclaimer"); //debugging
-    Office.context.mailbox.item.body.appendOnSendAsync(
-      null,
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to clear disclaimer via appendOnSend. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Clear disclaimer succeeded"); //debugging
-      }
-    );
   }
 }
 
