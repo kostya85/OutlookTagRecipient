@@ -178,10 +178,10 @@ function _tagExternal(hasExternal) {
   if (hasExternal) {
     console.log("External: Get Subject"); //debugging
 
-    Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
-      type: 'warning',
-      message: externalTag
-    });
+    // Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
+    //   type: 'warning',
+    //   message: externalTag
+    // });
     
     // Ensure "[External]" is prepended to the subject.
     Office.context.mailbox.item.subject.getAsync(
