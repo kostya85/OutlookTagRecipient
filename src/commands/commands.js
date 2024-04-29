@@ -206,10 +206,10 @@ function _tagExternal(hasExternal) {
         }
     });
 
-    Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
-      type: 'warning',
-      message: externalTag
-    });
+    // Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
+    //   type: 'warning',
+    //   message: externalTag
+    // });
   } else {
     console.log("Internal: Get subject"); //debugging
     // Ensure "[External]" is not part of the subject.
