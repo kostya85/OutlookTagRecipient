@@ -173,15 +173,10 @@ function _tagExternal(hasExternal) {
   console.log("_tagExternal method"); //debugging
 
   // External subject tag.
-  const externalTag = "[Отправка сообщения на сторонние адреса]";
+  const externalTag = "[External recipient]";
 
   if (hasExternal) {
     console.log("External: Get Subject"); //debugging
-
-    // Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
-    //   type: 'warning',
-    //   message: externalTag
-    // });
     
     // Ensure "[External]" is prepended to the subject.
     Office.context.mailbox.item.subject.getAsync(
@@ -209,6 +204,11 @@ function _tagExternal(hasExternal) {
               console.log("Set subject succeeded"); //debugging
           });
         }
+    });
+
+    Office.context.mailbox.item.notificationMessages.replaceAsync('warningMessage', {
+      type: 'warning',
+      message: externalTag
     });
   } else {
     console.log("Internal: Get subject"); //debugging

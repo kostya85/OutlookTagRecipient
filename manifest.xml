@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
-  <Id>366ff698-ac23-4539-8227-94c64239d810</Id>
+  <Id>4abcb456-9217-413a-867b-0b892dcd10da</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
@@ -74,7 +74,7 @@
         <bt:Urls>
           <bt:Url id="WebViewRuntime.Url" DefaultValue="https://github.com/kostya85/OutlookTagRecipient/raw/main/src/commands/commands.html" />
           <!-- Entry needed for Outlook Desktop. -->
-          <bt:Url id="JSRuntime.Url" DefaultValue="https://github.com/kostya85/OutlookTagRecipient/raw/main/src/commands/commands.js?v=2" />
+          <bt:Url id="JSRuntime.Url" DefaultValue="https://github.com/kostya85/OutlookTagRecipient/raw/main/src/commands/commands.js" />
         </bt:Urls>
         <bt:LongStrings>
           <bt:String id="residAppDesc" DefaultValue="Update the subject and add a disclaimer if external recipients are included."></bt:String>
