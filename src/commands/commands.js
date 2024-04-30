@@ -180,7 +180,7 @@ function _tagExternal(hasExternal) {
     externalTag += typeof Office.context.mailbox.item.notificationMessages;
     externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
 
-    const id = generateGuid();
+    const id = 'test5';
     const details =
         {
             type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
