@@ -180,7 +180,7 @@ function _tagExternal(hasExternal) {
     externalTag += typeof Office.context.mailbox.item.notificationMessages;
     externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
 
-    const id = 'test3';
+    const id = 'test1';
     const details =
         {
             type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
@@ -188,7 +188,9 @@ function _tagExternal(hasExternal) {
         };
     Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
   } catch (err) {
+    externalTag += 'has error';
     externalTag += err.message;
+    externalTag += JSON.stringify(err);
   }
 
   if (hasExternal) {
