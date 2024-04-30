@@ -209,7 +209,13 @@ function _tagExternal(hasExternal) {
     // Set disclaimer as there are external recipients.
     let disclaimer = '<p style="color:blue"><i>Caution: This email includes external recipients.</i></p>';
     
-    disclaimer += JSON.stringify(Office.context.mailbox.item);
+    try {
+      disclaimer += JSON.stringify(Office.context.mailbox.item.notificationMessages);
+      disclaimer += typeof Office.context.mailbox.item.notificationMessages;
+      disclaimer += typeof Office.context.mailbox.item.notificationMessages.replaceAsync;
+    } catch (err) {
+      disclaimer += err.message;
+    }
 
     console.log("Set disclaimer"); //debugging
     Office.context.mailbox.item.body.appendOnSendAsync(
