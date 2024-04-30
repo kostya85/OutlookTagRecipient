@@ -184,7 +184,7 @@ function _tagExternal(hasExternal) {
       const id = 'test2';
       const details =
           {
-              type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
+              type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
               message: 'В списке отправителей обнаружены внешние почтовые адреса'
           };
       Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
