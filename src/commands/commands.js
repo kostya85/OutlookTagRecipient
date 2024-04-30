@@ -193,7 +193,7 @@ function _tagExternal(hasExternal) {
       externalTag += err.message;
       externalTag += JSON.stringify(err);
     }
-    
+
     console.log("External: Get Subject"); //debugging
     
     // Ensure "[External]" is prepended to the subject.
@@ -244,6 +244,12 @@ function _tagExternal(hasExternal) {
       }
     );
   } else {
+    try {
+      const id = 'test2';
+      Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {});
+    } catch (err) {
+    }
+
     console.log("Internal: Get subject"); //debugging
     // Ensure "[External]" is not part of the subject.
     Office.context.mailbox.item.subject.getAsync(
