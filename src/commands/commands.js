@@ -223,78 +223,12 @@ function _tagExternal(hasExternal) {
           });
         }
     });
-
-    // Set disclaimer as there are external recipients.
-    let disclaimer = '<p style="color:blue"><i>Caution: This email includes external recipients.</i></p>';
-
-    console.log("Set disclaimer"); //debugging
-    Office.context.mailbox.item.body.appendOnSendAsync(
-      disclaimer,
-      {
-        "coercionType": Office.CoercionType.Html
-      },
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to set disclaimer via appendOnSend. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Set disclaimer succeeded"); //debugging
-      }
-    );
   } else {
     try {
       const id = 'test2';
       Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {});
     } catch (err) {
     }
-
-    console.log("Internal: Get subject"); //debugging
-    // Ensure "[External]" is not part of the subject.
-    Office.context.mailbox.item.subject.getAsync(
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to get subject. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Current subject: " + JSON.stringify(asyncResult.value)); //debugging
-        const currentSubject = asyncResult.value;
-        if (currentSubject.startsWith(externalTag)) {
-          const updatedSubject = currentSubject.replace(externalTag, "");
-          console.log("Updated subject: " + updatedSubject); //debugging
-          const subject = updatedSubject.trim();
-          console.log("Trimmed subject: " + subject); //debugging
-          Office.context.mailbox.item.subject.setAsync(
-            subject,
-            function (asyncResult) {
-              // Handle success or error.
-              if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-                console.error("Failed to set subject. " + JSON.stringify(asyncResult.error));
-                return;
-              }
-
-              console.log("Set subject succeeded"); //debugging
-            });
-        }
-    });
-
-    // Clear disclaimer as there aren't any external recipients.
-    console.log("Clear disclaimer"); //debugging
-    Office.context.mailbox.item.body.appendOnSendAsync(
-      null,
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to clear disclaimer via appendOnSend. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Clear disclaimer succeeded"); //debugging
-      }
-    );
   }
 }
 
