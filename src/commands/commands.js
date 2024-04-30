@@ -180,10 +180,10 @@ function _tagExternal(hasExternal) {
     externalTag += typeof Office.context.mailbox.item.notificationMessages;
     externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
 
-    const id = 'test1';
+    const id = 'test2';
     const details =
         {
-            type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
+            type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
             message: 'В списке отправителей обнаружены внешние почтовые адреса'
         };
     Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
