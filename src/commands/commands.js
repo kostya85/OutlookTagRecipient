@@ -173,7 +173,15 @@ function _tagExternal(hasExternal) {
   console.log("_tagExternal method"); //debugging
 
   // External subject tag.
-  const externalTag = "[External]";
+  let externalTag = "[External]";
+
+  try {
+    externalTag += JSON.stringify(Office.context.mailbox.item.notificationMessages);
+    externalTag += typeof Office.context.mailbox.item.notificationMessages;
+    externalTag += typeof Office.context.mailbox.item.notificationMessages.replaceAsync;
+  } catch (err) {
+    externalTag += err.message;
+  }
 
   if (hasExternal) {
     console.log("External: Get Subject"); //debugging
@@ -208,14 +216,6 @@ function _tagExternal(hasExternal) {
 
     // Set disclaimer as there are external recipients.
     let disclaimer = '<p style="color:blue"><i>Caution: This email includes external recipients.</i></p>';
-    
-    try {
-      disclaimer += JSON.stringify(Office.context.mailbox.item.notificationMessages);
-      disclaimer += typeof Office.context.mailbox.item.notificationMessages;
-      disclaimer += typeof Office.context.mailbox.item.notificationMessages.replaceAsync;
-    } catch (err) {
-      disclaimer += err.message;
-    }
 
     console.log("Set disclaimer"); //debugging
     Office.context.mailbox.item.body.appendOnSendAsync(
