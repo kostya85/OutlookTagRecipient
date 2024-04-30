@@ -175,25 +175,25 @@ function _tagExternal(hasExternal) {
   // External subject tag.
   let externalTag = "[External]";
 
-  try {
-    externalTag += JSON.stringify(Office.context.mailbox.item.notificationMessages);
-    externalTag += typeof Office.context.mailbox.item.notificationMessages;
-    externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
-
-    const id = 'test2';
-    const details =
-        {
-            type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-            message: 'В списке отправителей обнаружены внешние почтовые адреса'
-        };
-    Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
-  } catch (err) {
-    externalTag += 'has error';
-    externalTag += err.message;
-    externalTag += JSON.stringify(err);
-  }
-
   if (hasExternal) {
+    try {
+      externalTag += JSON.stringify(Office.context.mailbox.item.notificationMessages);
+      externalTag += typeof Office.context.mailbox.item.notificationMessages;
+      externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
+  
+      const id = 'test2';
+      const details =
+          {
+              type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
+              message: 'В списке отправителей обнаружены внешние почтовые адреса'
+          };
+      Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
+    } catch (err) {
+      externalTag += 'has error';
+      externalTag += err.message;
+      externalTag += JSON.stringify(err);
+    }
+    
     console.log("External: Get Subject"); //debugging
     
     // Ensure "[External]" is prepended to the subject.
