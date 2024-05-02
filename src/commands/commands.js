@@ -211,7 +211,7 @@ function _tagExternal(hasExternal) {
           Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {
             notificationCreated = true;
           });
-          });
+        });
       }else{
         const details =
         {
