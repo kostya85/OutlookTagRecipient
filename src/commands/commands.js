@@ -43,7 +43,7 @@ function checkForExternalTo() {
 
       const toRecipients = JSON.stringify(asyncResult.value);
 
-      recipients = toRecipients;
+      recipients = asyncResult.value;
 
       console.log("To recipients: " + toRecipients); //debugging
       const keyName = "tagExternalTo";
@@ -186,32 +186,20 @@ function _tagExternal(hasExternal) {
       externalTag += typeof Office.context.mailbox.item.notificationMessages;
       externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
 
-      // Get sessionData to determine if any fields have external recipients.
-      Office.context.mailbox.item.sessionData.getAllAsync(
-        function (asyncResult) {
-          // Handle success or error.
-          if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-            console.error("Failed to get all sessionData. " + JSON.stringify(asyncResult.error));
-            return;
-          }
+      let message = '';
 
-          const sessionData = JSON.stringify(asyncResult.value);
+      //message += 'В списке отправителей обнаружены внешние почтовые адреса';
+      message += Office.MailboxEnums.RecipientType.ExternalUser;
+      message += JSON.stringify(recipients);
 
-          let message = '';
+      const id = 'kbnotification';
+      const details =
+          {
+              type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
+              message: message.slice(0, 145) + '...'
+          };
+      Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
 
-          //message += 'В списке отправителей обнаружены внешние почтовые адреса';
-          message += Office.MailboxEnums.RecipientType.ExternalUser;
-          message += recipients;
-
-          const id = 'kbnotification';
-          const details =
-              {
-                  type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-                  message: message.slice(0, 100)
-              };
-          Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
-
-      });
     } catch (err) {
       externalTag += 'has error';
       externalTag += err.message;
