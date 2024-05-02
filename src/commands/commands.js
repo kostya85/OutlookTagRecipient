@@ -47,7 +47,6 @@ function checkForExternalTo() {
           && JSON.stringify(toRecipients).includes(Office.MailboxEnums.RecipientType.ExternalUser)) {
         console.log("To includes external users"); //debugging
         _setSessionData(keyName, true);
-        _setSessionData('recipients', JSON.stringify(toRecipients));
       } else {
         _setSessionData(keyName, false);
       }
@@ -125,7 +124,7 @@ function checkForExternalBcc() {
       // Handle success or error.
       if (asyncResult.status === Office.AsyncResultStatus.Succeeded) {
       console.log(`sessionData.setAsync(${key}) to ${value} succeeded`);
-      if ((key !== 'recipients') && value) {
+      if (value) {
         _tagExternal(value);
       } else {
         _checkForExternal();
