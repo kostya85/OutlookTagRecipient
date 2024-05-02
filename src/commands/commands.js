@@ -5,6 +5,8 @@
 
 Office.initialize = function (reason) {};
 
+let recipients = '';
+
 /**
  * Handles the OnMessageRecipientsChanged event.
  * @param {*} event The Office event object
@@ -40,6 +42,9 @@ function checkForExternalTo() {
       }
 
       const toRecipients = JSON.stringify(asyncResult.value);
+
+      recipients = toRecipients;
+
       console.log("To recipients: " + toRecipients); //debugging
       const keyName = "tagExternalTo";
       if (toRecipients != null
@@ -196,7 +201,7 @@ function _tagExternal(hasExternal) {
           const details =
               {
                   type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData + Office.MailboxEnums.RecipientType.ExternalUser
+                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData + Office.MailboxEnums.RecipientType.ExternalUser + recipients
               };
           Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
 
