@@ -188,12 +188,10 @@ function _tagExternal(hasExternal) {
       externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
 
       let message = '';
-
-      //message += 'В списке отправителей обнаружены внешние почтовые адреса';
-      message += Office.MailboxEnums.RecipientType.ExternalUser;
+      message += 'В списке отправителей обнаружены внешние почтовые адреса';
 
       if(recipients.length){
-        message += JSON.stringify(recipients);
+        message += ': ';
         for(let i = 0; i < recipients.length; i++){
           if(
             (recipients[i]['recipientType'] !== undefined) &&
