@@ -202,6 +202,10 @@ function _tagExternal(hasExternal) {
         }
       }
 
+      if(message.length > 145){
+        message = message.slice(0, 145) + '...';
+      }
+
       const id = 'kbnotification';
       if(notificationCreated){
         Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {
@@ -209,7 +213,7 @@ function _tagExternal(hasExternal) {
           const details =
           {
               type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-              message: message.slice(0, 145) + '...'
+              message: message
           };
           Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {
             notificationCreated = true;
@@ -219,7 +223,7 @@ function _tagExternal(hasExternal) {
         const details =
         {
             type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-            message: message.slice(0, 145) + '...'
+            message: message
         };
         Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {
           notificationCreated = true;
