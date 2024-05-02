@@ -197,11 +197,17 @@ function _tagExternal(hasExternal) {
 
           const sessionData = JSON.stringify(asyncResult.value);
 
+          let message = '';
+
+          //message += 'В списке отправителей обнаружены внешние почтовые адреса';
+          message += Office.MailboxEnums.RecipientType.ExternalUser;
+          message += recipients;
+
           const id = 'kbnotification';
           const details =
               {
                   type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData + Office.MailboxEnums.RecipientType.ExternalUser + recipients
+                  message: message.slice(0, 100)
               };
           Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
 
