@@ -190,7 +190,18 @@ function _tagExternal(hasExternal) {
 
       //message += 'В списке отправителей обнаружены внешние почтовые адреса';
       message += Office.MailboxEnums.RecipientType.ExternalUser;
-      message += JSON.stringify(recipients);
+
+      if(recipients.length){
+        message += JSON.stringify(recipients);
+        for(let i = 0; i < recipients.length; i++){
+          if(
+            (recipients[i]['recipientType'] !== undefined) &&
+            (recipients[i]['recipientType'] === Office.MailboxEnums.RecipientType.ExternalUser)
+          ){
+            message += recipients[i]['emailAddress'];
+          }
+        }
+      }
 
       const id = 'kbnotification';
       const details =
