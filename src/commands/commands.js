@@ -161,7 +161,7 @@ function _checkForExternal() {
         console.log("There are no external recipients"); //debugging
         _tagExternal(false);
       }
-    });
+  });
 }
 /**
  * If there are any external recipients, prepends the subject of the Outlook item
@@ -180,14 +180,27 @@ function _tagExternal(hasExternal) {
       externalTag += JSON.stringify(Office.context.mailbox.item.notificationMessages);
       externalTag += typeof Office.context.mailbox.item.notificationMessages;
       externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
-  
-      const id = 'kbnotification';
-      const details =
-          {
-              type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-              message: 'В списке отправителей обнаружены внешние почтовые адреса'
-          };
-      Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
+
+      // Get sessionData to determine if any fields have external recipients.
+      Office.context.mailbox.item.sessionData.getAllAsync(
+        function (asyncResult) {
+          // Handle success or error.
+          if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
+            console.error("Failed to get all sessionData. " + JSON.stringify(asyncResult.error));
+            return;
+          }
+
+          const sessionData = JSON.stringify(asyncResult.value);
+
+          const id = 'kbnotification';
+          const details =
+              {
+                  type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
+                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData
+              };
+          Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
+
+      });
     } catch (err) {
       externalTag += 'has error';
       externalTag += err.message;
