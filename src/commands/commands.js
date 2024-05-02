@@ -196,7 +196,7 @@ function _tagExternal(hasExternal) {
           const details =
               {
                   type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
-                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData
+                  message: 'В списке отправителей обнаружены внешние почтовые адреса' + sessionData + Office.MailboxEnums.RecipientType.ExternalUser
               };
           Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
 
