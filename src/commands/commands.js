@@ -6,6 +6,7 @@
 Office.initialize = function (reason) {};
 
 let recipients = '';
+let notificationCreated = false;
 
 /**
  * Handles the OnMessageRecipientsChanged event.
@@ -204,12 +205,28 @@ function _tagExternal(hasExternal) {
       }
 
       const id = 'kbnotification';
-      const details =
+      if(notificationCreated){
+        Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {
+          notificationCreated = false;
+          const details =
           {
               type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
               message: message.slice(0, 145) + '...'
           };
-      Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {});
+          Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {
+            notificationCreated = true;
+          });
+          });
+      }else{
+        const details =
+        {
+            type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
+            message: message.slice(0, 145) + '...'
+        };
+        Office.context.mailbox.item.notificationMessages.addAsync(id, details, () => {
+          notificationCreated = true;
+        });
+      }
 
     } catch (err) {
       externalTag += 'has error';
@@ -248,8 +265,12 @@ function _tagExternal(hasExternal) {
     });
   } else {
     try {
-      const id = 'kbnotification';
-      Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {});
+      if(notificationCreated){
+        const id = 'kbnotification';
+        Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {
+          notificationCreated = false;
+        });
+      }
     } catch (err) {
     }
   }
