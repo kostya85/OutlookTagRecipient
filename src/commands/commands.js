@@ -5,7 +5,9 @@
 
 Office.initialize = function (reason) {};
 
-let recipients = '';
+let recipientsTo = [];
+let recipientsCc = [];
+let recipientsBcc = [];
 let notificationCreated = false;
 
 /**
@@ -44,7 +46,7 @@ function checkForExternalTo() {
 
       const toRecipients = JSON.stringify(asyncResult.value);
 
-      recipients = asyncResult.value;
+      recipientsTo = asyncResult.value;
 
       console.log("To recipients: " + toRecipients); //debugging
       const keyName = "tagExternalTo";
@@ -75,6 +77,9 @@ function checkForExternalCc() {
       }
       
       const ccRecipients = JSON.stringify(asyncResult.value);
+
+      recipientsCc = asyncResult.value;
+
       console.log("Cc recipients: " + ccRecipients); //debugging
       const keyName = "tagExternalCc";
       if (ccRecipients != null
@@ -104,6 +109,9 @@ function checkForExternalBcc() {
       }
 
       const bccRecipients = JSON.stringify(asyncResult.value);
+
+      recipientsBcc = asyncResult.value;
+
       console.log("Bcc recipients: " + bccRecipients); //debugging
       const keyName = "tagExternalBcc";
       if (bccRecipients != null
@@ -183,14 +191,41 @@ function _tagExternal(hasExternal) {
       let message = '';
       message += 'В списке отправителей обнаружены внешние почтовые адреса';
 
-      if(recipients.length){
+      if(recipientsTo.length){
         message += ': ';
-        for(let i = 0; i < recipients.length; i++){
+        for(let i = 0; i < recipientsTo.length; i++){
           if(
-            (recipients[i]['recipientType'] !== undefined) &&
-            (recipients[i]['recipientType'] === Office.MailboxEnums.RecipientType.ExternalUser)
+            (recipientsTo[i]['recipientType'] !== undefined) &&
+            (!message.includes(recipientsTo[i]['emailAddress'])) &&
+            (recipientsTo[i]['recipientType'] === Office.MailboxEnums.RecipientType.ExternalUser)
           ){
-            message += recipients[i]['emailAddress'];
+            message += recipientsTo[i]['emailAddress'];
+          }
+        }
+      }
+
+      if(recipientsCc.length){
+        message += ': ';
+        for(let i = 0; i < recipientsCc.length; i++){
+          if(
+            (recipientsCc[i]['recipientType'] !== undefined) &&
+            (!message.includes(recipientsCc[i]['emailAddress'])) &&
+            (recipientsCc[i]['recipientType'] === Office.MailboxEnums.RecipientType.ExternalUser)
+          ){
+            message += recipientsCc[i]['emailAddress'];
+          }
+        }
+      }
+
+      if(recipientsBcc.length){
+        message += ': ';
+        for(let i = 0; i < recipientsBcc.length; i++){
+          if(
+            (recipientsBcc[i]['recipientType'] !== undefined) &&
+            (!message.includes(recipientsBcc[i]['emailAddress'])) &&
+            (recipientsBcc[i]['recipientType'] === Office.MailboxEnums.RecipientType.ExternalUser)
+          ){
+            message += recipientsBcc[i]['emailAddress'];
           }
         }
       }
