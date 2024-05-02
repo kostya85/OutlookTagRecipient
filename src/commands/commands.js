@@ -181,7 +181,7 @@ function _tagExternal(hasExternal) {
       externalTag += typeof Office.context.mailbox.item.notificationMessages;
       externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
   
-      const id = 'test2';
+      const id = 'kbnotification';
       const details =
           {
               type: Office.MailboxEnums.ItemNotificationMessageType.ProgressIndicator,
@@ -225,19 +225,11 @@ function _tagExternal(hasExternal) {
     });
   } else {
     try {
-      const id = 'test2';
+      const id = 'kbnotification';
       Office.context.mailbox.item.notificationMessages.removeAsync(id, () => {});
     } catch (err) {
     }
   }
-}
-
-function generateGuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0,
-          v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-  });
 }
 
 // 1st parameter: FunctionName of LaunchEvent in the manifest; 2nd parameter: Its implementation in this .js file.
