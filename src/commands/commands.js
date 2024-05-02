@@ -178,15 +178,8 @@ function _checkForExternal() {
 function _tagExternal(hasExternal) {
   console.log("_tagExternal method"); //debugging
 
-  // External subject tag.
-  let externalTag = "[External]";
-
   if (hasExternal) {
     try {
-      externalTag += JSON.stringify(Office.context.mailbox.item.notificationMessages);
-      externalTag += typeof Office.context.mailbox.item.notificationMessages;
-      externalTag += typeof Office.context.mailbox.item.notificationMessages.addAsync;
-
       let message = '';
       message += 'В списке отправителей обнаружены внешние почтовые адреса';
 
@@ -231,40 +224,7 @@ function _tagExternal(hasExternal) {
       }
 
     } catch (err) {
-      externalTag += 'has error';
-      externalTag += err.message;
-      externalTag += JSON.stringify(err);
     }
-
-    console.log("External: Get Subject"); //debugging
-    
-    // Ensure "[External]" is prepended to the subject.
-    Office.context.mailbox.item.subject.getAsync(
-      function (asyncResult) {
-        // Handle success or error.
-        if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-          console.error("Failed to get subject. " + JSON.stringify(asyncResult.error));
-          return;
-        }
-
-        console.log("Current Subject: " + JSON.stringify(asyncResult.value)); //debugging
-        let subject = asyncResult.value;
-        if (!subject.includes(externalTag)) {
-          subject = `${externalTag} ${subject}`;
-          console.log("Updated Subject: " + subject); //debugging
-          Office.context.mailbox.item.subject.setAsync(
-            subject,
-            function (asyncResult) {
-              // Handle success or error.
-              if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
-                console.error("Failed to set Subject. " + JSON.stringify(asyncResult.error));
-                return;
-              }
-
-              console.log("Set subject succeeded"); //debugging
-          });
-        }
-    });
   } else {
     try {
       if(notificationCreated){
